@@ -1,5 +1,5 @@
 import '../pages/PeoplePage.dart';
-import '../pages/GroupsPage.dart';
+import 'pages/TeamsPage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _pages = [
     PeoplePage(),
-    GroupsPage(),
+    TeamsPage(),
   ];
 
   void _onTap(int index) {
