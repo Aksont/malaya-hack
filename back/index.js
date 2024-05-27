@@ -22,8 +22,10 @@ const db = admin.firestore();
 const userRoutes = require('./routes/userRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const teamRoutes = require('./routes/teamRoutes'); // Add this line
+const membershipRoutes = require('./routes/membershipRoutes');
 
-// Use routes
+// Use the membershipRoutes in your Express app
+app.use('/api/membership', membershipRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/profiles', profileRoutes);
 app.use('/api/teams', teamRoutes); // Add this line
