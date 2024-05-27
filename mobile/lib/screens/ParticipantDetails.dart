@@ -5,15 +5,29 @@ import 'package:mobile/types/Participant.dart';
 class ParticipantDetails extends StatelessWidget {
   final Participant participant;
 
-  const ParticipantDetails(Key? key, this.participant) : super(key: key);
+  const ParticipantDetails(this.participant);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(
-        participant.name,
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontWeight: FontWeight.bold),
+      surfaceTintColor: Colors.white,
+      title: Column(
+        children: [
+          ClipOval(
+            child: Image.asset(
+              'assets/side_eye_monkey.png',
+              height: 80,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            participant.name,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ],
       ),
       content: IntrinsicHeight(
         child: Column(

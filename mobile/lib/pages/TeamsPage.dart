@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/api/fetchParticipants.dart';
+import 'package:mobile/api/fetchTeamMembers.dart';
+import 'package:mobile/api/fetchTeams.dart';
+import 'package:mobile/screens/ParticipantDetails.dart';
 import 'package:mobile/types/Participant.dart';
 
 class TeamsPage extends StatelessWidget {
@@ -55,18 +58,47 @@ class _ExpansionTileWithDataState extends State<ExpansionTileWithData> {
   Widget build(BuildContext context) {
     return Card(
       child: ExpansionTile(
+        childrenPadding: EdgeInsets.symmetric(horizontal: 15.0),
         title: Text(widget.team.name),
         onExpansionChanged: (expanded) {
           setState(() {
             _isExpanded = expanded;
           });
         },
+        expandedAlignment: Alignment.centerLeft,
         children: [
           _isExpanded
-              ? const Text("temp")
-              : const Center(
-                  child: CircularProgressIndicator(),
-                ),
+              ? FutureBuilder(
+                  future: fetchTeamMembers(widget.team.id),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      print("FutureBuilder is waiting");
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      print("FutureBuilder has error: ${snapshot.error}");
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ...snapshot.data!.map(
+                            (participant) => GestureDetector(
+                              onTap: () => showDialog(
+                                context: context,
+                                builder: (context) => ParticipantDetails(participant),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(participant.name),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                  },
+                )
+              : const Text(''),
         ],
       ),
     );

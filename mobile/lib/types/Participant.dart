@@ -18,7 +18,7 @@ class Participant {
   factory Participant.fromJson(Map<String, dynamic> json) {
     final p = Participant(
       id: json['id'],
-      name: json['name'],
+      name: json['name'] ?? "no name available",
       email: json['email'] ?? 'no email available',
       academicBackground: json['academicBackground'] ?? 'no background available',
       skills: json['skills'] != null ? List<String>.from(json['skills']) : ['no skills available'],

@@ -25,14 +25,20 @@ class PeoplePage extends StatelessWidget {
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               final participant = snapshot.data![index];
-              print(index);
               return GestureDetector(
                 onTap: () => showDialog(
                   context: context,
-                  builder: (context) => ParticipantDetails(Key(index.toString()), participant),
+                  builder: (context) => ParticipantDetails(participant),
                 ),
                 child: Card(
                   child: ListTile(
+                    contentPadding: EdgeInsets.all(10),
+                    leading: ClipOval(
+                      child: Image.asset(
+                        'assets/side_eye_monkey.png',
+                        height: 45,
+                      ),
+                    ),
                     title: Text(
                       participant.name,
                       style: const TextStyle(fontWeight: FontWeight.bold),

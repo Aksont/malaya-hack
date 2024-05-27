@@ -1,0 +1,182 @@
+/* .formButton {
+    background-color: var(--dark-blue) !important;
+    color: white !important;
+    font-size: x-large !important;
+  }
+
+.formButton:hover {
+    background-color: var(--hovered-blue) !important;
+    
+  }
+
+.errorLabel {
+  color: var(--dark-blue) !important;
+}
+
+.inputLabel{
+  font-size: 105%;
+}
+
+
+.info {
+  color: var(--dark-blue) !important;
+}
+
+.myFormControl {
+  border-color: var(--dutch-orange) !important;
+  box-shadow: inset 0 0.5px 0.5px rgba(0, 0, 0, 0.075), 0 0 5px rgba(255, 0, 0, 0.6) !important; 
+}
+
+
+[data-title]:hover:after {
+  opacity: 1;
+  transition: all 0.1s ease 0.5s;
+  visibility: visible;
+}
+[data-title]:after {
+  border-radius: 1rem;
+  content: attr(data-title);
+  background-color: white;
+  color: #111;
+  font-size: 103%;
+  position: absolute;
+  left: 50%;
+  white-space: nowrap;
+  box-shadow: 1px 1px 3px #222222;
+  border: 1px solid var(--dark-blue);
+  visibility: hidden;
+}
+  
+[data-title] {
+  position: relative;
+} */
+
+/* Base styles for input fields */
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
+  outline: none;
+}
+
+/* Style for invalid form controls */
+.myFormControl {
+  border-color: #dc3545;
+}
+
+.myFormControl:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+}
+
+/* Style for the label */
+.inputLabel {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #495057;
+}
+
+/* Container style to ensure proper layout */
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Row styling for better alignment */
+.mt-2 {
+  margin-top: 20px;
+}
+
+.formButton {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  margin: 5px; /* Add margin at the top to separate from the tags */
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.formButton:hover {
+  background-color: #0056b3;
+}
+
+.formButton:active {
+  background-color: #004085;
+  transform: scale(0.98);
+}
+
+.formButton:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.custom-select {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.custom-select:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.custom-select:hover {
+  border-color: #86b7fe;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  margin: 0 5px 5px 0; /* Add margin to create space between tags */
+  border-radius: 20px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.badge span {
+  margin-left: 5px;
+}
+
+/* TagList Component */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px; /* Add margin at the bottom to separate from the buttons */
+}
+
+.tag-list .badge {
+  margin: 5px;
+}
