@@ -8,12 +8,21 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+//init firebase 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://hackathon-reg-malayasia.firebaseio.com'
 });
 
 const db = admin.firestore();
+
+// Import routes
+const userRoutes = require('./routes/userRoutes');
+const profileRoutes = require('./routes/profileRoutes');
+
+// Use routes
+app.use('/api/users', userRoutes);
+app.use('/api/profiles', profileRoutes);
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
@@ -113,4 +122,3 @@ app.get('/teams/:id', async (req, res) => {
       res.status(500).send(error.message);
     }
   });
-  
