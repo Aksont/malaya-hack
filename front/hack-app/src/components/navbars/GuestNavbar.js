@@ -1,6 +1,6 @@
 import React from "react";
 import "../../assets/styles/nav.css";
-import { Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
 
 export default function GuestNavbar() {
   return (

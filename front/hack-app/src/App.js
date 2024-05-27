@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import "./App.css";
-import Page from "./components/page";
 import UnavailablePage from "./components/unavailable-page";
 import { RegisterPage } from "./components/register-page";
 import { LoginPage } from "./components/login-page";
@@ -11,7 +10,7 @@ import { MemberPage } from "./components/member-page";
 import TeamsPage from "./components/teams-page";
 import UserNavbar from "./components/navbars/UserNavbar";
 import GuestNavbar from "./components/navbars/GuestNavbar";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState } from "react";
 import LogoutPage from "./components/navbars/LogoutPage";
 
 function App() {

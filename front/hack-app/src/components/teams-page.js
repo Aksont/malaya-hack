@@ -4,7 +4,6 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
@@ -17,62 +16,62 @@ import Box from "@mui/material/Box";
 import { useEffect } from "react";
 import {
   getTeams,
-  getIsUserPartOfTeam,
   getUser,
   getTeamMembers,
+  sendPostJoinTeam,
 } from "../api/api";
 
 export default function TeamsPage() {
   const [teams, setTeams] = useState([]);
-  const [isInTeam, setIsInTeam] = useState(true);
+  const [members, setMembers] = useState();
+  const [isInTeam, setIsInTeam] = useState();
 
   useEffect(() => {
     getTeams().then((response) => {
-      console.log("teams");
-      console.log(response);
       setTeams(!!response ? response.data : []);
     });
-
-    // getIsUserPartOfTeam().then((response) => {
-    //   setIsInTeam(!!response ? response.data : false);
-    // });
   }, []);
+
+  useEffect(() => {
+    for (const team of teams) {
+      if (team.members.includes(sessionStorage.getItem("id"))) {
+        setIsInTeam(true);
+        break;
+      }
+    }
+  }, [teams]);
 
   const handleAccordionClick = (e) => {
     const teamId = e.currentTarget.getAttribute("teamId");
-    let team = teams.find((team) => team.id === teamId);
     getTeamMembers(teamId).then((response) => {
-      console.log("members");
-      console.log(response);
-      team.members = response.data.members;
-      const indexOfTeam = teams.indexOf(teamId);
-      if (indexOfTeam !== -1) {
-        teams[indexOfTeam] = team;
+      let members_;
+      console.log(members);
+      if (members === undefined) {
+        members_ = {};
+      } else {
+        members_ = JSON.parse(JSON.stringify(members));
       }
-
-      setTeams(teams);
-      console.log("teams updated");
-      console.log(teams);
+      members_[teamId] = response.data.members;
+      setMembers(members_);
     });
   };
 
   const handleJoinTeam = (e) => {
     const teamId = e.currentTarget.getAttribute("teamId");
-    console.log("teamId");
-    console.log(teamId);
-    // let team = teams.find((team) => team.id === teamId);
 
-    // getTeamMembers(teamId).then((response) => {
-    //   console.log("members");
-    //   console.log(response);
-    //   team.members = response.data.members;
-    //   const indexOfTeam = teams.indexOf(teamId);
-    //   if (indexOfTeam !== -1) {
-    //     teams[indexOfTeam] = team;
-    //   }
-    //   setTeams(teams);
-    //   console.log(teams);
-    // });
+    sendPostJoinTeam(teamId, sessionStorage.getItem("id")).then(
+      (responseJoinTeam) => {
+        console.log(responseJoinTeam);
+
+        getUser(sessionStorage.getItem("id")).then((responseUser) => {
+          console.log(responseUser);
+          let members_ = JSON.parse(JSON.stringify(members));
+          members_[teamId].push(responseUser);
+          setMembers(members_);
+          setIsInTeam(true);
+        });
+      }
+    );
   };
 
   return (
@@ -106,55 +105,57 @@ export default function TeamsPage() {
               )}
             </Box>
           </AccordionSummary>
-          <AccordionDetails>
-            <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-              {team.members.map((user, idx) => (
-                <div key={idx}>
-                  <ListItem alignItems="flex-start">
-                    <Link
-                      href={"/members/" + user.id}
-                      underline="hover"
-                      className="subtitle2"
-                    >
-                      <ListItemAvatar>
-                        <Avatar
-                          alt={user.name}
-                          src="/static/images/avatar/1.jpg"
-                        />
-                      </ListItemAvatar>
-                    </Link>
-                    <ListItemText
-                      primary={`${user.name}`}
-                      secondary={
-                        <React.Fragment>
-                          {!!user.background && (
-                            <Typography
-                              sx={{ display: "block" }}
-                              component="span"
-                              variant="body2"
-                              color="text.primary"
-                            >
-                              {user.background}
-                            </Typography>
-                          )}
-                          {!!user.skills && (
-                            <Typography
-                              sx={{ display: "block" }}
-                              component="span"
-                              variant="body2"
-                              color="text.secondary"
-                            >
-                              Skills: {user.skills.join(", ")}
-                            </Typography>
-                          )}
-                        </React.Fragment>
-                      }
-                    />
-                  </ListItem>
-                </div>
-              ))}
-            </List>
-          </AccordionDetails>
+          {!!members && !!members[team.id] && (
+            <AccordionDetails>
+              <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+                {members[team.id].map((user, idx) => (
+                  <div key={idx}>
+                    <ListItem alignItems="flex-start">
+                      <Link
+                        href={"/members/" + user.id}
+                        underline="hover"
+                        className="subtitle2"
+                      >
+                        <ListItemAvatar>
+                          <Avatar
+                            alt={user.name}
+                            src="/static/images/avatar/1.jpg"
+                          />
+                        </ListItemAvatar>
+                      </Link>
+                      <ListItemText
+                        primary={`${user.name}`}
+                        secondary={
+                          <React.Fragment>
+                            {!!user.background && (
+                              <Typography
+                                sx={{ display: "block" }}
+                                component="span"
+                                variant="body2"
+                                color="text.primary"
+                              >
+                                {user.background}
+                              </Typography>
+                            )}
+                            {!!user.skills && (
+                              <Typography
+                                sx={{ display: "block" }}
+                                component="span"
+                                variant="body2"
+                                color="text.secondary"
+                              >
+                                Skills: {user.skills.join(", ")}
+                              </Typography>
+                            )}
+                          </React.Fragment>
+                        }
+                      />
+                    </ListItem>
+                  </div>
+                ))}
+              </List>
+            </AccordionDetails>
+          )}
         </Accordion>
       ))}
     </div>

@@ -2,25 +2,14 @@
 
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { getUser } from "../api/api";
 
 export function MemberPage() {
   const { id } = useParams();
   const [member, setMember] = useState();
-
-  // useEffect(() => {
-  //   setMember({
-  //     name: "Salsabeel",
-  //     lastname: "Tantoush",
-  //     email: "salsa@gmail.com",
-  //     background: "Software Engineering",
-  //     skills: ["Node.js", "GCP"],
-  //   });
-  // }, []);
 
   useEffect(() => {
     if (!!id) {

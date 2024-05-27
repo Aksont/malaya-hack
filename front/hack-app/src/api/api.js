@@ -60,20 +60,14 @@ export async function getTeamMembers(teamId) {
   }
 }
 
-export async function getIsUserPartOfTeam() {
-  try {
-    const responseData = await getApiCall().get(`/is-part-of-team`);
-    return responseData;
-  } catch (err) {
-    throw new Error(err.message);
-  }
-}
-
 export async function sendPostJoinTeam(teamId, userId) {
   try {
-    const responseData = await getApiCall().post(`/team/` + teamId + `/join`, {
-      userId,
-    });
+    const responseData = await getApiCall().post(
+      `api/teams/` + teamId + `/join`,
+      {
+        userId,
+      }
+    );
     return responseData;
   } catch (err) {
     throw new Error(err.message);
