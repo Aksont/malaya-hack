@@ -6,10 +6,11 @@ const admin = require('firebase-admin');
 const db = admin.firestore();
 
 // Route to register a new user
+
 router.post('/register', async (req, res) => {
   try {
     const { email, password, name } = req.body;
-    
+
     // Register the user using Firebase Authentication
     const userRecord = await admin.auth().createUser({
       email,
@@ -17,19 +18,24 @@ router.post('/register', async (req, res) => {
       displayName: name
     });
 
-    // Save additional user data to Firestore
+    // Save additional user data to Firestore with initial null values
     await db.collection('users').doc(userRecord.uid).set({
       email,
-      name
-      // Add other profile-related fields here if needed
+      name,
+      skills: null,
+      academicBackground: null,
+      interests: null
     });
 
-    res.status(201).send('User registered successfully');
+    res.status(201).send({ uid: userRecord.uid });
   } catch (error) {
     console.error('Error registering user:', error);
     res.status(500).send('An error occurred while registering user');
   }
 });
+
+module.exports = router;
+
 
 // Route to log in a user
 router.post('/login', async (req, res) => {
