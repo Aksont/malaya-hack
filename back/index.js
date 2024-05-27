@@ -5,6 +5,8 @@ const cors = require('cors');
 const serviceAccount = require('./hackathon-reg-malayasia-firebase-adminsdk-64iq3-c870a4a312.json');
 
 const app = express();
+const port = process.env.PORT || 8080;
+
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -24,21 +26,14 @@ const profileRoutes = require('./routes/profileRoutes');
 app.use('/api/users', userRoutes);
 app.use('/api/profiles', profileRoutes);
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+app.listen(port, () => {
+  console.log('Server is running on default port');
 });
 
-//registration endpoint
-app.post('/register', async (req, res) => {
-    const { email, password, ...profileData } = req.body;
-    try {
-      const userRecord = await admin.auth().createUser({ email, password });
-      await db.collection('users').doc(userRecord.uid).set(profileData);
-      res.status(201).send(userRecord);
-    } catch (error) {
-      res.status(400).send(error.message);
-    }
-  });
+app.get('/hack', (req, res) => {
+    res.send('Hello, Hackathon!');
+  });   
+
 
 //get all participants
 app.get('/participants', async (req, res) => {
