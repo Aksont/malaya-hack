@@ -49,17 +49,37 @@ router.get('/', async (req, res) => {
 
 // Get a single team
 router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const doc = await db.collection('teams').doc(id).get();
-    if (!doc.exists) {
-      res.status(404).send('Team not found');
-    } else {
-      res.status(200).send({ id: doc.id, ...doc.data() });
+    const { id } = req.params;
+    try {
+      const doc = await db.collection('teams').doc(id).get();
+      if (!doc.exists) {
+        return res.status(404).send('Team not found');
+      }
+  
+      const teamData = { id: doc.id, ...doc.data() };
+      const memberIds = teamData.members;
+  
+      if (memberIds && memberIds.length > 0) {
+        const memberPromises = memberIds.map(memberId => db.collection('users').doc(memberId).get());
+        const memberDocs = await Promise.all(memberPromises);
+  
+        const members = memberDocs.map(memberDoc => {
+          if (memberDoc.exists) {
+            return { id: memberDoc.id, ...memberDoc.data() };
+          }
+          return null;
+        }).filter(member => member !== null); // Filter out any null values in case some members don't exist
+  
+        teamData.members = members;
+      } else {
+        teamData.members = [];
+      }
+  
+      res.status(200).send(teamData);
+    } catch (error) {
+      console.error('Error getting team:', error);
+      res.status(500).send('An error occurred while retrieving the team');
     }
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
-
+  });
+    
 module.exports = router;
