@@ -1,0 +1,149 @@
+body {
+  background-color: #212529; /* Dark background color */
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #343a40; /* Dark border color */
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #343a40; /* Dark background color */
+  color: #ffffff; /* Text color */
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
+  outline: none;
+}
+
+/* Style for invalid form controls */
+.myFormControl {
+  border-color: #dc3545;
+}
+
+.myFormControl:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+}
+
+/* Style for the label */
+.inputLabel {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #ffffff; /* Text color */
+}
+
+/* Container style to ensure proper layout */
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Row styling for better alignment */
+.mt-2 {
+  margin-top: 20px;
+}
+
+.formButton {
+  background-color: #6c757d; /* Dark gray button background color */
+  color: #ffffff; /* Button text color */
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.formButton:hover {
+  background-color: #4d94ff; /* Darker blue for button hover background color */
+}
+
+.formButton:active {
+  background-color: #3d85ff; /* Even darker blue for button active background color */
+  transform: scale(0.98);
+}
+
+.formButton:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(77, 148, 255, 0.5); /* Lighter blue for button focus shadow */
+}
+
+.text-center {
+  text-align: center;
+}
+
+.custom-select {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #ffffff; /* Text color */
+  background-color: #343a40; /* Dark background color */
+  border: 1px solid #343a40; /* Dark border color */
+  border-radius: 4px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.custom-select:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.custom-select:hover {
+  border-color: #86b7fe;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  margin: 0 5px 5px 0; /* Add margin to create space between tags */
+  border-radius: 20px;
+  background-color: #6c757d; /* Dark gray tag background color */
+  color: #ffffff; /* Tag text color */
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.badge span {
+  margin-left: 5px;
+}
+
+/* TagList Component */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px; /* Add margin at the bottom to separate from the buttons */
+}
+
+.tag-list .badge {
+  margin: 5px;
+}
+
+.h4 {
+  color: #ffffff; /* White color for h4 text */
+}
+
+.body2 {
+  color: #adb5bd; /* Light gray color for body2 text */
+}
+
+.subtitle2 {
+  color: #007bff; /* Blue color for subtitle2 text */
+}
+
+.subtitle2:hover {
+  text-decoration: underline; /* Underline on hover for subtitle2 text */
+}
