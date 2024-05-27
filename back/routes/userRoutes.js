@@ -39,21 +39,26 @@ module.exports = router;
 
 // Route to log in a user
 router.post('/login', async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    // Log in the user using Firebase Authentication
-    const userRecord = await admin.auth().getUserByEmail(email);
-    if (userRecord) {
-      res.status(200).send('User logged in successfully');
-    } else {
-      res.status(404).send('User not found');
+    try {
+      const { email, password } = req.body;
+  
+      // Log in the user using Firebase Authentication
+      const userRecord = await admin.auth().getUserByEmail(email);
+      if (userRecord) {
+        // Get the UID of the logged-in user
+        const uid = userRecord.uid;
+  
+        // Send the UID along with the success response
+        res.status(200).send({ message: 'User logged in successfully', uid });
+      } else {
+        res.status(404).send('User not found');
+      }
+    } catch (error) {
+      console.error('Error logging in user:', error);
+      res.status(500).send('An error occurred while logging in user');
     }
-  } catch (error) {
-    console.error('Error logging in user:', error);
-    res.status(500).send('An error occurred while logging in user');
-  }
-});
+  });
+  
 
 // Route to log out a user
 router.post('/logout', async (req, res) => {
