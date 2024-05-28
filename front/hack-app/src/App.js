@@ -1,17 +1,22 @@
+import "./App.css";
+import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import "./App.css";
+
+import GuestNavbar from "./components/navbars/GuestNavbar";
+import UserNavbar from "./components/navbars/UserNavbar";
+
 import UnavailablePage from "./components/unavailable-page";
 import { RegisterPage } from "./components/register-page";
 import { LoginPage } from "./components/login-page";
+import { MemberPage } from "./components/member-page";
 import { SetProfilePage } from "./components/set-profile-page";
 import { MembersPage } from "./components/members-page";
-import { MemberPage } from "./components/member-page";
 import TeamsPage from "./components/teams-page";
-import UserNavbar from "./components/navbars/UserNavbar";
-import GuestNavbar from "./components/navbars/GuestNavbar";
-import { useState } from "react";
 import LogoutPage from "./components/navbars/LogoutPage";
+
+import { ThemeProvider } from "@mui/material";
+import theme from './theme';
 
 function App() {
   const registerPage = (
@@ -33,9 +38,9 @@ function App() {
   );
 
   const membersPage = (
-    <Container>
+    // <Container >
       <MembersPage />
-    </Container>
+    // {/* </Container> */}
   );
 
   const memberPage = (
@@ -80,21 +85,23 @@ function App() {
   }
 
   return (
-    <Router>
-      {navBar}
-      <Routes>
-        <Route path="">
-          <Route path="/register" element={registerPage} />
-          <Route path="/login" element={loginPage} />
-          <Route path="/profile" element={setProfilePage} />
-          <Route path="/members" element={membersPage} />
-          <Route path="/members/:id" element={memberPage} />
-          <Route path="/teams" element={teamsPage} />
-          <Route path="/logout" element={logoutPage} />
-          <Route path="/*" element={unavailablePage} />
-        </Route>
-      </Routes>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+        {navBar}
+        <Routes>
+          <Route path="">
+            <Route path="/register" element={registerPage} />
+            <Route path="/login" element={loginPage} />
+            <Route path="/profile" element={setProfilePage} />
+            <Route path="/members" element={membersPage} />
+            <Route path="/members/:id" element={memberPage} />
+            <Route path="/teams" element={teamsPage} />
+            <Route path="/logout" element={logoutPage} />
+            <Route path="/*" element={unavailablePage} />
+          </Route>
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 

@@ -15,62 +15,35 @@ import Typography from "@mui/material/Typography";
 import { useState, useEffect } from "react";
 import Link from "@mui/material/Link";
 import { getParticipants } from "../api/api";
+import { DataGrid } from '@mui/x-data-grid';
+
 
 export function MembersPage() {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
     getParticipants().then((response) => {
+      console.log(response.data)
       setRows(!!response ? response.data : []);
     });
   }, []);
 
+  const columns = [
+    {field: 'name', headerName: 'Name', flex: 1},
+    {field: 'email', headerName: 'Email', flex: 1},
+    {field: 'skills', headerName: 'Skills', flex: 1},
+    {field: 'interests', headerName: 'Interests', flex: 1},
+    {field: 'academicBackground', headerName: 'Academic background', flex: 1},
+  ];
+
   return (
-    <Card>
-      <Box sx={{ overflowX: "auto" }}>
-        <Table sx={{ minWidth: "800px" }}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Lastname</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Background</TableCell>
-              <TableCell>Skills</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => {
-              return (
-                <TableRow hover key={row.id}>
-                  <TableCell href={"/members/" + row.email}>
-                    <Stack
-                      sx={{ alignItems: "center" }}
-                      direction="row"
-                      spacing={2}
-                    >
-                      <Avatar src={row.name} alt={row.name} />
-                      <Link
-                        href={"/members/" + row.id}
-                        underline="hover"
-                        className="subtitle2"
-                      >
-                        <Typography className="subtitle2">
-                          {row.name}
-                        </Typography>
-                      </Link>
-                    </Stack>
-                  </TableCell>
-                  <TableCell>{row.lastname}</TableCell>
-                  <TableCell>{row.email}</TableCell>
-                  <TableCell>{!!row.background && row.background}</TableCell>
-                  <TableCell>{!!row.skills && row.skills.join(", ")}</TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </Box>
-      <Divider />
-    </Card>
+    <Box sx={{ height: '100%', margin: '1em 10%'}}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        disableRowSelectionOnClick
+        
+      />
+    </Box>
   );
 }
