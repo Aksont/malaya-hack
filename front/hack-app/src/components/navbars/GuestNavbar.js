@@ -1,24 +1,18 @@
 import React from "react";
-import "../../assets/styles/nav.css";
-import { Nav, Navbar } from "react-bootstrap";
+import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 
 export default function GuestNavbar() {
   return (
-    <Navbar
-      bg="darkBlue"
-      variant="dark"
-      sticky="top"
-      expand="md"
-      collapseOnSelect
-    >
-      <Navbar.Brand>ImpactXchange2024</Navbar.Brand>
-      <Navbar.Toggle />
-      <Navbar.Collapse className="ps-2">
-        <Nav className="ms-auto">
-          <Nav.Link href="/login">Login</Nav.Link>
-          <Nav.Link href="/register">Register</Nav.Link>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          ImpactXchange2024
+        </Typography>
+        <Box>
+          <Button color="inherit" href="/login">Login</Button>
+          <Button color="inherit" href="/register">Register</Button>
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 }

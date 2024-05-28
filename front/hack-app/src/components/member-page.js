@@ -1,87 +1,45 @@
-"use client";
-
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Row, Col } from "react-bootstrap";
 import { getUser } from "../api/api";
+import { Typography } from "@mui/material";
+import { Col } from "react-bootstrap";
 
 export function MemberPage() {
   const { id } = useParams();
   const [member, setMember] = useState();
 
   useEffect(() => {
-    if (!!id) {
+    if (id) {
       getUser(id).then((response) => {
-        console.log(response);
-        setMember(!!response ? response.data : {});
+        setMember(response?.data || {});
       });
     }
   }, [id]);
 
-  if (!!member) {
-    return (
-      <>
-        <Row className="mt-2">
-          <Col sm={4} />
-          <Col sm={4} align="center">
-            <Avatar
-              src={member.name}
-              sx={{
-                width: 200,
-                height: 200,
-              }}
-            />
-          </Col>
-          <Col sm={4} />
-        </Row>
-        <Row className="mt-2">
-          <Col sm={4} />
-          <Col sm={4} align="center">
-            <div className="inputLabel">
-              {member.name} {member.lastname}
-            </div>
-          </Col>
-          <Col sm={4} />
-        </Row>
-        <Row className="mt-2">
-          <Col sm={4} />
-          <Col sm={4} align="center">
-            <div className="inputLabel">{member.background}</div>
-          </Col>
-          <Col sm={4} />
-        </Row>
-        <Row className="mt-2">
-          <Col sm={4} />
-          <Col sm={4} align="center">
-            <div className="inputLabel">{member.email}</div>
-          </Col>
-          <Col sm={4} />
-        </Row>
-        <Row className="mt-2">
-          <Col sm={1} />
-          <Col sm={10} align="center">
-            <hr
-              style={{
-                color: "white",
-                backgroundColor: "white",
-                height: 1,
-              }}
-            />
-          </Col>
-          <Col sm={1} />
-        </Row>
-        <Row className="mt-2">
-          <Col sm={4} />
-          <Col sm={4} align="center">
-            {!!member.skills && (
-              <div className="inputLabel">{member.skills.join(", ")}</div>
-            )}
-          </Col>
-          <Col sm={4} />
-        </Row>
-      </>
-    );
-  }
+  return member ? (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: '1em' }}>
+      <Avatar src={member.name} sx={{ width: 200, height: 200 }} />
+      <div style={{height: '1em'}}/>
+      <Typography variant="h5">{member.name}</Typography>
+      <div className="inputLabel">{member.background}</div>
+      <div className="inputLabel">{member.email}</div>
+      <hr style={{ color: "white", backgroundColor: "white", height: 1, width: "30%" }} />
+      <_Info label='Name' data={member.name}/>
+      {!!member.academicBackground && <_Info label='Academic background' data={member.academicBackground}/>}
+      {!!member.email && <_Info label='Email' data={member.email}/>}
+      {!!member.skills && <_Info label='Skills' data={member.skills.join(", ")}/>}
+      {!!member.interests && <_Info label='Interests' data={member.interests.join(", ")}/>}
+    </div>
+  ) : null;
+}
+
+export function _Info({label, data}){
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center",}}>
+      <Typography style={{fontWeight: 'bold'}}>{label}</Typography>
+      <Typography>{data}</Typography>
+    </div>
+  );
 }

@@ -38,15 +38,11 @@ function App() {
   );
 
   const membersPage = (
-    // <Container >
-      <MembersPage />
-    // {/* </Container> */}
+    <MembersPage />
   );
 
   const memberPage = (
-    <Container>
-      <MemberPage />
-    </Container>
+    <MemberPage />
   );
 
   const teamsPage = (

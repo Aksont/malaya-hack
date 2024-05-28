@@ -16,6 +16,7 @@ import { useState, useEffect } from "react";
 import Link from "@mui/material/Link";
 import { getParticipants } from "../api/api";
 import { DataGrid } from '@mui/x-data-grid';
+import { useNavigate } from 'react-router-dom';
 
 
 export function MembersPage() {
@@ -28,21 +29,28 @@ export function MembersPage() {
     });
   }, []);
 
+  const navigate = useNavigate();
+
+  const handleRowClick = (params) => {
+    const id = params.row['id'];
+    navigate(`/members/${id}`);
+  };
+
   const columns = [
-    {field: 'name', headerName: 'Name', flex: 1},
-    {field: 'email', headerName: 'Email', flex: 1},
-    {field: 'skills', headerName: 'Skills', flex: 1},
-    {field: 'interests', headerName: 'Interests', flex: 1},
-    {field: 'academicBackground', headerName: 'Academic background', flex: 1},
+    { field: 'name', headerName: 'Name', flex: 1 },
+    { field: 'email', headerName: 'Email', flex: 1 },
+    { field: 'skills', headerName: 'Skills', flex: 1 },
+    { field: 'interests', headerName: 'Interests', flex: 1 },
+    { field: 'academicBackground', headerName: 'Academic background', flex: 1 },
   ];
 
   return (
-    <Box sx={{ height: '100%', margin: '1em 10%'}}>
+    <Box sx={{ height: '100%', margin: '1em 10%' }}>
       <DataGrid
         rows={rows}
         columns={columns}
+        onRowClick={handleRowClick}
         disableRowSelectionOnClick
-        
       />
     </Box>
   );
