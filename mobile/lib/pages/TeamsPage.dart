@@ -4,6 +4,7 @@ import 'package:mobile/api/fetchTeamMembers.dart';
 import 'package:mobile/api/fetchTeams.dart';
 import 'package:mobile/screens/ParticipantDetails.dart';
 import 'package:mobile/types/Participant.dart';
+import 'package:mobile/types/Team.dart';
 
 class TeamsPage extends StatelessWidget {
   final groupTitle = 'Group title goes here';

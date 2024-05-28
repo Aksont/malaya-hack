@@ -1,7 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:mobile/types/Participant.dart'; // For converting JSON data
+import 'package:mobile/types/Participant.dart';
+import 'package:mobile/types/Team.dart'; // For converting JSON data
 
 Future<List<Team>> fetchTeams() async {
   print("fetching teams");
